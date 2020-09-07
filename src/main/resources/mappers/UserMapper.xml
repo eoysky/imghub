@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lmsite.imghub.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.lmsite.imghub.entity.User">
+        <!--@mbg.generated-->
+        <!--@Table `user`-->
+        <id column="id" property="id"/>
+        <id column="uid" property="uid"/>
+        <id column="user_name" property="userName"/>
+        <id column="phone_num" property="phoneNum"/>
+        <id column="email" property="email"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="gender" property="gender"/>
+        <result column="passwd" property="passwd"/>
+        <result column="status" property="status"/>
+        <result column="permission" property="permission"/>
+        <result column="storage_engine" property="storageEngine"/>
+        <result column="last_login" property="lastLogin"/>
+        <result column="upload_limit" property="uploadLimit"/>
+        <result column="upload_total" property="uploadTotal"/>
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="welcome_msg" property="welcomeMsg"/>
+        <result column="reg_ua" property="regUa"/>
+        <result column="reg_ip" property="regIp"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `uid`, user_name, phone_num, email, nick_name, gender, passwd, `status`, permission,
+        storage_engine, last_login, upload_limit, upload_total, avatar_url, welcome_msg,
+        reg_ua, reg_ip, gmt_create
+    </sql>
+    
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user` where 1 = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="uid != null and uid != ''">
+            and `uid` = #{uid}
+        </if>
+        <if test="userName != null and userName != ''">
+            and user_name = #{userName}
+        </if>
+        <if test="phoneNum != null and phoneNum != ''">
+            and phone_num = #{phoneNum}
+        </if>
+        <if test="email != null and email != ''">
+            and email = #{email}
+        </if>
+    </select>
+    
+    <select id="selectAllList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+    </select>
+    
+    <select id="selectByCondition" parameterType="cn.lmsite.imghub.entity.User" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="uid != null and uid != ''">
+                and uid = #{uid}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="phoneNum != null">
+                and phone_num = #{phoneNum}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name = #{nickName}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="passwd != null and passwd != ''">
+                and passwd = #{passwd}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="permission != null">
+                and permission = #{permission}
+            </if>
+            <if test="storageEngine != null and storageEngine != ''">
+                and storage_engine = #{storageEngine}
+            </if>
+            <if test="lastLogin != null">
+                and last_login = #{lastLogin}
+            </if>
+            <if test="uploadLimit != null">
+                and upload_limit = #{uploadLimit}
+            </if>
+            <if test="uploadTotal != null">
+                and upload_total = #{uploadTotal}
+            </if>
+            <if test="avatarUrl != null and avatarUrl != ''">
+                and avatar_url = #{avatarUrl}
+            </if>
+            <if test="welcomeMsg != null and welcomeMsg != ''">
+                and welcome_msg = #{welcomeMsg}
+            </if>
+            <if test="regUa != null and regUa != ''">
+                and reg_ua = #{regUa}
+            </if>
+            <if test="regIp != null and regIp != ''">
+                and reg_ip = #{regIp}
+            </if>
+            <if test="gmtCreate != null">
+                and gmt_create = #{gmtCreate}
+            </if>
+        </where>
+    </select>
+    
+    <update id="updateByCondition" parameterType="cn.lmsite.imghub.entity.User">
+        <if test="id != null">
+            update user
+            <set>
+                <if test="uid != null and uid != ''">
+                    uid = #{uid},
+                </if>
+                <if test="userName != null and userName != ''">
+                    user_name = #{userName},
+                </if>
+                <if test="phoneNum != null">
+                    phone_num = #{phoneNum},
+                </if>
+                <if test="email != null and email != ''">
+                    email = #{email},
+                </if>
+                <if test="nickName != null and nickName != ''">
+                    nick_name = #{nickName},
+                </if>
+                <if test="gender != null">
+                    gender = #{gender},
+                </if>
+                <if test="passwd != null and passwd != ''">
+                    passwd = #{passwd},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="permission != null">
+                    permission = #{permission},
+                </if>
+                <if test="storageEngine != null and storageEngine != ''">
+                    storage_engine = #{storageEngine},
+                </if>
+                <if test="lastLogin != null">
+                    last_login = #{lastLogin},
+                </if>
+                <if test="uploadLimit != null">
+                    upload_limit = #{uploadLimit},
+                </if>
+                <if test="uploadTotal != null">
+                    upload_total = #{uploadTotal},
+                </if>
+                <if test="avatarUrl != null and avatarUrl != ''">
+                    avatar_url = #{avatarUrl},
+                </if>
+                <if test="welcomeMsg != null and welcomeMsg != ''">
+                    welcome_msg = #{welcomeMsg},
+                </if>
+                <if test="regUa != null and regUa != ''">
+                    reg_ua = #{regUa},
+                </if>
+                <if test="regIp != null and regIp != ''">
+                    reg_ip = #{regIp},
+                </if>
+                <if test="gmtCreate != null">
+                    gmt_create = #{gmtCreate},
+                </if>
+            </set>
+            where id = #{id}
+        </if>
+    </update>
+    
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.lmsite.imghub.entity.User" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `user` (`uid`, user_name, phone_num, email, nick_name, gender, passwd,
+        `status`, permission, storage_engine, last_login, upload_limit, upload_total,
+        avatar_url, welcome_msg, reg_ua, reg_ip, gmt_create)
+        values (#{uid}, #{userName}, #{phoneNum}, #{email}, #{nickName}, #{gender}, #{passwd},
+        #{status}, #{permission}, #{storageEngine}, #{lastLogin}, #{uploadLimit}, #{uploadTotal},
+        #{avatarUrl}, #{welcomeMsg}, #{regUa}, #{regIp}, #{gmtCreate})
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update `user`
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="nick_name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.nickName}
+                </foreach>
+            </trim>
+            <trim prefix="gender = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gender}
+                </foreach>
+            </trim>
+            <trim prefix="passwd = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.passwd}
+                </foreach>
+            </trim>
+            <trim prefix="`status` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.status}
+                </foreach>
+            </trim>
+            <trim prefix="permission = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.permission}
+                </foreach>
+            </trim>
+            <trim prefix="storage_engine = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.storageEngine}
+                </foreach>
+            </trim>
+            <trim prefix="last_login = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.lastLogin}
+                </foreach>
+            </trim>
+            <trim prefix="upload_limit = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.uploadLimit}
+                </foreach>
+            </trim>
+            <trim prefix="upload_total = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.uploadTotal}
+                </foreach>
+            </trim>
+            <trim prefix="avatar_url = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.avatarUrl}
+                </foreach>
+            </trim>
+            <trim prefix="welcome_msg = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.welcomeMsg}
+                </foreach>
+            </trim>
+            <trim prefix="reg_ua = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.regUa}
+                </foreach>
+            </trim>
+            <trim prefix="reg_ip = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.regIp}
+                </foreach>
+            </trim>
+            <trim prefix="gmt_create = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gmtCreate}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `user`
+        (`uid`, user_name, phone_num, email, nick_name, gender, passwd, `status`, permission,
+        storage_engine, last_login, upload_limit, upload_total, avatar_url, welcome_msg,
+        reg_ua, reg_ip, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.uid}, #{item.userName}, #{item.phoneNum}, #{item.email}, #{item.nickName},
+            #{item.gender}, #{item.passwd}, #{item.status}, #{item.permission}, #{item.storageEngine},
+            #{item.lastLogin}, #{item.uploadLimit}, #{item.uploadTotal}, #{item.avatarUrl},
+            #{item.welcomeMsg}, #{item.regUa}, #{item.regIp}, #{item.gmtCreate})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lmsite.imghub.mapper.OperationConfigMapper">
+    <resultMap id="BaseResultMap" type="cn.lmsite.imghub.entity.OperationConfig">
+        <!--@mbg.generated-->
+        <!--@Table operation_config-->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="values" property="values"/>
+        <result column="engine_statue" property="engineStatue"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, `name`, `values`, engine_statue, gmt_create
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from operation_config
+        where id = #{id}
+    </select>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.lmsite.imghub.entity.OperationConfig" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into operation_config (`name`, `values`, engine_statue, gmt_create)
+        values (#{name}, #{values}, #{engineStatue}, #{gmtCreate})
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update operation_config
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="`name` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.name}
+                </foreach>
+            </trim>
+            <trim prefix="`values` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.values}
+                </foreach>
+            </trim>
+            <trim prefix="engine_statue = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.engineStatue}
+                </foreach>
+            </trim>
+            <trim prefix="gmt_create = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gmtCreate}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into operation_config
+        (`name`, `values`, engine_statue, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.name}, #{item.values}, #{item.engineStatue}, #{item.gmtCreate})
+        </foreach>
+    </insert>
+</mapper>
