@@ -16,9 +16,14 @@
     
     <properties>
         <java.version>1.8</java.version>
+        <mybatis-spring-boot-starter.version>2.1.3</mybatis-spring-boot-starter.version>
+        <hutool-all.version>5.4.1</hutool-all.version>
+        <fastjson.version>1.2.73</fastjson.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
     
     <dependencies>
+        <!--Spring boot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -38,24 +43,27 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.3</version>
+            <version>${mybatis-spring-boot-starter.version}</version>
         </dependency>
-        
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+        <!--数据源-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- HuTool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
+        <!--测试框架依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -67,45 +75,32 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- 代码生成依赖 -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-            <version>3.3.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
-        <!-- swagger 文档依赖 -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.5.20</version>
-        </dependency>
+        <!--########################################################-->
+        <!--################  请从这里添加其他依赖  ####################-->
+        <!--########################################################-->
+        <!--JSON 处理工具-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.73</version>
+            <version>${fastjson.version}</version>
         </dependency>
+        <!-- Apache 依赖包-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.11</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.4</version>
+            <version>${commons-beanutils.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    
     </dependencies>
     <repositories>
         <repository>
@@ -119,12 +114,11 @@
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
-    
+    <!--编译打包插件配置-->
     <build>
         <finalName>imghub-server</finalName>
         <!-- 定义了变量配置文件的地址 -->
         <filters>
-            <!--suppress UnresolvedMavenProperty -->
             <filter>src/main/resources/config/application-${env}.yml</filter>
         </filters>
         <resources>
@@ -141,7 +135,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <archive>
                         <addMavenDescriptor>true</addMavenDescriptor>
@@ -154,28 +148,23 @@
                             <Class-Path>./</Class-Path>
                         </manifestEntries>
                     </archive>
-                    <!-- 过滤掉不希望包含在jar中的文件  -->
-                    <!--<excludes>-->
-                    <!--     <exclude>*.xml</exclude>-->
-                    <!--     <exclude>spring/**</exclude>-->
-                    <!--     <exclude>config/**</exclude>-->
-                    <!--</excludes>-->
-                    <!-- 添加文件到jar中的文件  -->
-                    <!--<includes>-->
-                    <!--     <include></include>-->
-                    <!--</includes>-->
+                    <!-- 资源文件，如 sql 文件过滤掉不希望包含在 jar 中的文件  -->
+                    <excludes>
+                        <exclude>data/*</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12.4</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    <!--环境变量-->
     <profiles>
         <profile>
             <id>dev</id>

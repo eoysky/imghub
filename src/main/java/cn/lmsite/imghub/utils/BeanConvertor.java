@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -46,7 +46,7 @@ public class BeanConvertor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (ArrayUtils.isEmpty(ignoreProperties)) {
+        if (ArrayUtil.isEmpty(ignoreProperties)) {
             BeanUtils.copyProperties(source, targetInstance);
         } else {
             BeanUtils.copyProperties(source, targetInstance, ignoreProperties);
