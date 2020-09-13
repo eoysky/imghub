@@ -13,10 +13,7 @@ import cn.lmsite.imghub.vo.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
@@ -33,7 +30,7 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult <UserVO>}
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<Boolean> userRegister(UserVO user) {
+    public BaseResult<Boolean> userRegister(@RequestBody UserVO user) {
         ServiceResult<Boolean> result = usersService.register(user);
         return buildingBaseResult(result);
     }
@@ -44,7 +41,7 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult<Boolean>}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<Boolean> userLogin(UserVO user) {
+    public BaseResult<Boolean> userLogin(@RequestBody UserVO user) {
         ServiceResult<Boolean> login = usersService.login(user);
         return buildingBaseResult(login);
     }
@@ -55,7 +52,7 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult <UserVO>}
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<UserVO> userInfoUpdate(UserVO user) {
+    public BaseResult<UserVO> userInfoUpdate(@RequestBody UserVO user) {
         ServiceResult<UserVO> update = usersService.updateUser(user);
         return buildingBaseResult(update);
     }
@@ -66,7 +63,7 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult <UserVO>}
      */
     @RequestMapping(value = "/detail", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<UserVO> getUser(UserVO user) {
+    public BaseResult<UserVO> getUser(@RequestBody UserVO user) {
         ServiceResult<UserVO> detail = usersService.selectUser(user.getId(), user.getUid(), user.getUserName(), user.getPhoneNum(),
                 user.getEmail());
         return buildingBaseResult(detail);
@@ -89,7 +86,7 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult <List<UserVO>>}
      */
     @RequestMapping(value = "/queryByCondition", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<List<UserVO>> getAllList(UserVO user) {
+    public BaseResult<List<UserVO>> getAllList(@RequestBody UserVO user) {
         ServiceResult<List<UserVO>> listServiceResult = usersService.selectByCondition(user);
         return buildingBaseResult(listServiceResult);
     }
@@ -100,7 +97,7 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult <byte[]>}
      */
     @RequestMapping(value = "/genUserSign", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<byte[]> genUserSign(UserVO user) {
+    public BaseResult<byte[]> genUserSign(@RequestBody UserVO user) {
         if (StringUtils.isAnyBlank(user.getUserName(), user.getPasswd())) {
             return new BaseResult<>(CommonResultEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
         }
