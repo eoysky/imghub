@@ -43,7 +43,7 @@ public class UserApi extends BaseApi {
      *
      * @return {@link BaseResult<Boolean>}
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public BaseResult<Boolean> userLogin(UserVO user) {
         ServiceResult<Boolean> login = usersService.login(user);
         return buildingBaseResult(login);
