@@ -23,6 +23,9 @@
         <result column="reg_ua" property="regUa"/>
         <result column="reg_ip" property="regIp"/>
         <result column="gmt_create" property="gmtCreate"/>
+        <collection property="roles" ofType="cn.lmsite.imghub.entity.ImghubRole">
+            <result column="role_name" property="roleName"/>
+        </collection>
     </resultMap>
     
     <sql id="Base_Column_List">
@@ -290,4 +293,13 @@
             #{item.welcomeMsg}, #{item.regUa}, #{item.regIp}, #{item.gmtCreate})
         </foreach>
     </insert>
+
+    <select id="findByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select u.*
+        ,r.roleName
+        from `user` u
+        LEFT JOIN imghub_role_user iru on u.id= iru.user_id
+        LEFT JOIN imghub_role r on iru.role_id=r.id
+        where user_name= #{username}
+    </select>
 </mapper>

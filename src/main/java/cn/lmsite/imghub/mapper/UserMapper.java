@@ -67,4 +67,11 @@ public interface UserMapper {
      * @return int
      */
     int batchInsert(@Param("list") List<User> list);
+
+    /**
+     * 通过用户名获取User对象
+     * @param username
+     * @return
+     */
+    User findByUserName(String username);
 }

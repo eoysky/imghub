@@ -2,6 +2,7 @@ package cn.lmsite.imghub.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -66,4 +67,6 @@ public class User implements Serializable {
 
     /** 注册时间 */
     private Date gmtCreate;
+    /**关联的角色*/
+    private List<ImghubRole> roles;
 }
