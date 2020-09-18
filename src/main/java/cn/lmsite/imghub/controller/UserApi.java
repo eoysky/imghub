@@ -2,16 +2,11 @@ package cn.lmsite.imghub.controller;
 
 import java.util.List;
 
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.asymmetric.Sign;
-import cn.hutool.crypto.asymmetric.SignAlgorithm;
 import cn.lmsite.imghub.common.result.BaseResult;
 import cn.lmsite.imghub.common.result.ServiceResult;
-import cn.lmsite.imghub.common.enums.ResultCodeEnum;
-import cn.lmsite.imghub.service.UsersService;
+import cn.lmsite.imghub.service.UserService;
 import cn.lmsite.imghub.vo.UserVO;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.repository.query.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/user")
 public class UserApi extends ApiResultEnhanced {
 
-    final UsersService usersService;
-
-    public UserApi(UsersService usersService) {
-        this.usersService = usersService;
-    }
+    @Autowired
+    private UserService userService;
 
     /**
      * 用户注册
@@ -33,7 +25,7 @@ public class UserApi extends ApiResultEnhanced {
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public BaseResult<Boolean> userRegister(@RequestBody UserVO user) {
-        ServiceResult<Boolean> result = usersService.register(user);
+        ServiceResult<Boolean> result = userService.register(user);
         return buildResultByServiceRes(result);
     }
 
@@ -43,8 +35,8 @@ public class UserApi extends ApiResultEnhanced {
      * @return {@link BaseResult<Boolean>}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<UserVO> userLogin(@RequestBody UserVO user) {
-        ServiceResult<UserVO> login = usersService.login(user);
+    public BaseResult<UserVO> userLogin(@RequestBody UserVO userVO) {
+        ServiceResult<UserVO> login = userService.login(userVO);
         return buildResultByServiceRes(login);
     }
 
@@ -54,8 +46,8 @@ public class UserApi extends ApiResultEnhanced {
      * @return {@link BaseResult <UserVO>}
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<UserVO> userInfoUpdate(@RequestBody UserVO user) {
-        ServiceResult<UserVO> update = usersService.updateUser(user);
+    public BaseResult<UserVO> userInfoUpdate(@RequestBody UserVO userVO) {
+        ServiceResult<UserVO> update = userService.updateUser(userVO);
         return buildResultByServiceRes(update);
     }
 
@@ -65,66 +57,33 @@ public class UserApi extends ApiResultEnhanced {
      * @return {@link BaseResult <UserVO>}
      */
     @RequestMapping(value = "/detail", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<UserVO> getUser(@RequestBody UserVO user) {
-        ServiceResult<UserVO> detail = usersService.selectUser(user.getId(), user.getUid(), user.getUserName(), user.getPhoneNum(),
-                user.getEmail());
+    public BaseResult<UserVO> getUser(@RequestBody UserVO userVO) {
+        ServiceResult<UserVO> detail = userService.selectUser(userVO.getId(), userVO.getUid(), userVO.getUserName(), userVO.getPhoneNum(),
+                userVO.getEmail());
         return buildResultByServiceRes(detail);
     }
 
     /**
-     * 获取所有用户列表
+     * 获取所有用户列表；管理员有权获取
      *
      * @return {@link BaseResult <List<UserVO>>}
      */
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
     public BaseResult<List<UserVO>> getAllList() {
-        ServiceResult<List<UserVO>> detail = usersService.selectAllUserList();
+        ServiceResult<List<UserVO>> detail = userService.selectAllUserList();
         return buildResultByServiceRes(detail);
     }
 
     /**
-     * 根据 任意属性进行查询 用户
+     * 根据任意属性进行查询用户<br/>
+     * 管理员有权查询，返回用户列表
      *
      * @return {@link BaseResult <List<UserVO>>}
      */
     @RequestMapping(value = "/queryByCondition", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<List<UserVO>> getAllList(@RequestBody UserVO user) {
-        ServiceResult<List<UserVO>> listServiceResult = usersService.selectByCondition(user);
+    public BaseResult<List<UserVO>> getAllList(@RequestBody UserVO userVO) {
+        ServiceResult<List<UserVO>> listServiceResult = userService.selectByCondition(userVO);
         return buildResultByServiceRes(listServiceResult);
     }
 
-    /**
-     * 根据 用户名和密码生成签名
-     *
-     * @return {@link BaseResult <byte[]>}
-     */
-    @RequestMapping(value = "/genUserSign", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<byte[]> genUserSign(@RequestBody UserVO user) {
-        if (StringUtils.isAnyBlank(user.getUserName(), user.getPasswd())) {
-            return new BaseResult<>(ResultCodeEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
-        }
-        byte[] content = (user.getUserName() + user.getPasswd()).getBytes();
-        Sign sign = SecureUtil.sign(SignAlgorithm.MD5withRSA);
-        //签名
-        byte[] signed = sign.sign(content);
-        return new BaseResult<>(ResultCodeEnum.SUCCESS, signed);
-    }
-
-    /**
-     * 根据 用户名和密码生成签名
-     *
-     * @return {@link BaseResult <Boolean>}
-     */
-    @RequestMapping(value = "/{id}/verifySign", method = RequestMethod.GET)
-    public BaseResult<Boolean> genUserSign(@Param("signature") String signature, @PathVariable("id") Long id) {
-        if (StringUtils.isBlank(signature)) {
-            return new BaseResult<>(ResultCodeEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
-        }
-        Sign sign = SecureUtil.sign(SignAlgorithm.MD5withRSA);
-        UserVO userVO = usersService.selectById(id).getData();
-        String content = userVO.getUserName() + userVO.getPasswd();
-        // //验证签名
-        boolean verify = sign.verify(content.getBytes(), signature.getBytes());
-        return new BaseResult<>(ResultCodeEnum.SUCCESS, verify);
-    }
 }

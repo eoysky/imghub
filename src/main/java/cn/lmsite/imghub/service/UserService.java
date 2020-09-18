@@ -5,7 +5,7 @@ import java.util.List;
 import cn.lmsite.imghub.common.result.ServiceResult;
 import cn.lmsite.imghub.vo.UserVO;
 
-public interface UsersService {
+public interface UserService {
 
     ServiceResult<UserVO> login(UserVO userVO);
 

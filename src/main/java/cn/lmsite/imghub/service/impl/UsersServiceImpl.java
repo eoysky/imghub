@@ -7,14 +7,14 @@ import java.util.List;
 import cn.hutool.core.lang.UUID;
 import cn.lmsite.imghub.common.enums.ResultCodeEnum;
 import cn.lmsite.imghub.common.result.ServiceResult;
-import cn.lmsite.imghub.config.IConfig;
+import cn.lmsite.imghub.common.constants.BaseConfig;
 import cn.lmsite.imghub.entity.User;
 import cn.lmsite.imghub.mapper.UserMapper;
 import cn.lmsite.imghub.service.RedisService;
-import cn.lmsite.imghub.service.UsersService;
+import cn.lmsite.imghub.service.UserService;
 import cn.lmsite.imghub.utils.BeanConvertor;
 import cn.lmsite.imghub.utils.JsonUtils;
-import cn.lmsite.imghub.utils.userutils.CryptUtils;
+import cn.lmsite.imghub.utils.user.CryptUtils;
 import cn.lmsite.imghub.vo.UserVO;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UsersServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -170,7 +170,7 @@ public class UsersServiceImpl implements UsersService {
     public ServiceResult<String> getUserToken(UserVO userVO) {
         JSONObject userJson = JsonUtils.beanToJsonObject(userVO);
         String token = UUID.randomUUID().toString().replace("-", "");
-        redisService.set(token, userJson, IConfig.TOKEN_EXPIRATION_TIME);
+        redisService.set(token, userJson, BaseConfig.TOKEN_EXPIRATION_TIME);
         return new ServiceResult<>(token);
     }
 

@@ -17,11 +17,11 @@ public enum SystemCodeEnum {
     @Getter
     private final int    code;
     @Getter
-    private final String conent;
+    private final String content;
 
     SystemCodeEnum(int code, String content) {
         this.code = code;
-        this.conent = content;
+        this.content = content;
     }
 
     public static SystemCodeEnum findByCode(int code) {
