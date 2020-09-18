@@ -2,7 +2,7 @@ package cn.lmsite.imghub.common.result;
 
 import java.io.Serializable;
 
-import cn.lmsite.imghub.common.result.enums.CommonResultEnum;
+import cn.lmsite.imghub.common.enums.ResultCodeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,8 +52,8 @@ public class BaseResult<T> implements Serializable {
      *
      * @param codeEnum the code enum
      */
-    public BaseResult(CommonResultEnum codeEnum) {
-        this.success = codeEnum == CommonResultEnum.SUCCESS;
+    public BaseResult(ResultCodeEnum codeEnum) {
+        this.success = codeEnum == ResultCodeEnum.SUCCESS;
         this.resultCode = codeEnum.getCode();
         this.resultMsg = codeEnum.getMsg();
     }
@@ -64,9 +64,9 @@ public class BaseResult<T> implements Serializable {
      * @param codeEnum the code enum
      * @param data     the data
      */
-    public BaseResult(CommonResultEnum codeEnum, T data) {
+    public BaseResult(ResultCodeEnum codeEnum, T data) {
         this.data = data;
-        this.success = codeEnum == CommonResultEnum.SUCCESS;
+        this.success = codeEnum == ResultCodeEnum.SUCCESS;
         this.resultCode = codeEnum.getCode();
         this.resultMsg = codeEnum.getMsg();
     }

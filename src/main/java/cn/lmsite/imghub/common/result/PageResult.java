@@ -1,6 +1,6 @@
 package cn.lmsite.imghub.common.result;
 
-import cn.lmsite.imghub.common.result.enums.CommonResultEnum;
+import cn.lmsite.imghub.common.enums.ResultCodeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class BasePageResult<T> extends BaseResult<T> {
+public class PageResult<T> extends BaseResult<T> {
 
     /**
      * 当前页码
@@ -31,7 +31,7 @@ public class BasePageResult<T> extends BaseResult<T> {
     /**
      * Constructor.
      */
-    public BasePageResult() {
+    public PageResult() {
     }
 
     /**
@@ -45,7 +45,7 @@ public class BasePageResult<T> extends BaseResult<T> {
      * @param pageSize   the page size
      * @param totalCount the total
      */
-    public BasePageResult(boolean success, String resultCode, T data, String resultMsg, int pageStart, int pageSize, int totalCount) {
+    public PageResult(boolean success, String resultCode, T data, String resultMsg, int pageStart, int pageSize, int totalCount) {
         super(success, resultCode, data, resultMsg);
         this.pageStart = pageStart;
         this.pageSize = pageSize;
@@ -57,7 +57,7 @@ public class BasePageResult<T> extends BaseResult<T> {
      *
      * @param resultCode the result code
      */
-    public BasePageResult(CommonResultEnum resultCode) {
+    public PageResult(ResultCodeEnum resultCode) {
         super(resultCode);
     }
 }

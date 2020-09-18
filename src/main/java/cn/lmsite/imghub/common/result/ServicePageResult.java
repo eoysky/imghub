@@ -1,6 +1,6 @@
 package cn.lmsite.imghub.common.result;
 
-import cn.lmsite.imghub.common.result.enums.ResultCodeEnum;
+import cn.lmsite.imghub.common.enums.ResultCodeEnum;
 
 public class ServicePageResult<T> extends ServiceResult<T> {
 

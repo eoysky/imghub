@@ -5,9 +5,9 @@ import java.util.List;
 import cn.lmsite.imghub.common.result.ServiceResult;
 import cn.lmsite.imghub.vo.UserVO;
 
-public interface UsersService {
+public interface UserService {
 
-    ServiceResult<Boolean> login(UserVO userVO);
+    ServiceResult<UserVO> login(UserVO userVO);
 
     ServiceResult<Boolean> register(UserVO userVO);
 
@@ -28,4 +28,10 @@ public interface UsersService {
     ServiceResult<List<UserVO>> selectAllUserList();
 
     ServiceResult<List<UserVO>> selectByCondition(UserVO user);
+
+    ServiceResult<String> getUserToken(UserVO userVO);
+
+    ServiceResult<Boolean> verifyUserToken(String token);
+
+
 }

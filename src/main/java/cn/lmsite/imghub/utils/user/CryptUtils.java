@@ -1,4 +1,4 @@
-package cn.lmsite.imghub.utils.userutils;
+package cn.lmsite.imghub.utils.user;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;

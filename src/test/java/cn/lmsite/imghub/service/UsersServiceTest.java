@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 class UsersServiceTest {
 
     @Autowired
-    UsersService usersService;
+    UserService userService;
 
     @Test
     void testRegister() {
@@ -42,41 +42,58 @@ class UsersServiceTest {
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15");
         userVO.setGmtCreate(new Date());
         System.out.println(userVO.toString());
-        ServiceResult<Boolean> register = usersService.register(userVO);
+        ServiceResult<Boolean> register = userService.register(userVO);
         System.out.println("\n\n" + register.toString());
     }
 
     @Test
     void testLogin() {
         Long id = 1L;
-        ServiceResult<UserVO> result = usersService.selectById(id);
+        ServiceResult<UserVO> result = userService.selectById(id);
         UserVO userVO = new UserVO();
         userVO.setUserName("jonny6015");
         userVO.setPasswd("rain8240");
-        ServiceResult<Boolean> login = usersService.login(userVO);
+        ServiceResult<UserVO> login = userService.login(userVO);
         System.out.println(JSON.toJSONString(result));
     }
 
     @Test
     void testUpdate() {
-        UserVO userVO = usersService.selectById(1L).getData();
+        UserVO userVO = userService.selectById(1L).getData();
         userVO.setPasswd("rain8240");
-        ServiceResult<UserVO> result = usersService.updateUser(userVO);
+        ServiceResult<UserVO> result = userService.updateUser(userVO);
         System.out.println(JSON.toJSONString(result));
     }
 
     @Test
     void testSelectAll() {
-        List<UserVO> data = usersService.selectAllUserList().getData();
+        List<UserVO> data = userService.selectAllUserList().getData();
         System.out.println(JSON.toJSONString(data));
     }
 
+    @Test
+    void testGetToken() {
+        UserVO user = new UserVO();
+        user.setUserName("admin");
+        user.setPasswd("rain8240");
+        ServiceResult<String> userLoginToken = userService.getUserToken(user);
+        System.out.println(userLoginToken.getData());
+        ServiceResult<Boolean> isTrue = userService.verifyUserToken(userLoginToken.getData());
+        System.out.println(isTrue);
+    }
+
+    @Test
+    void testVerifyUserToken() {
+        ServiceResult<Boolean> isTrue = userService.verifyUserToken("c8cc2f522d27464f9670b49f0bc99b0c");
+        System.out.println(isTrue);
+    }
+
     /**
-     * Setter method for property <tt>usersService</tt>.
+     * Setter method for property <tt>userService</tt>.
      *
-     * @param usersService value to be assigned to property usersService
+     * @param userService value to be assigned to property userService
      */
-    public void setUsersService(UsersService usersService) {
-        this.usersService = usersService;
+    public void setUsersService(UserService userService) {
+        this.userService = userService;
     }
 }

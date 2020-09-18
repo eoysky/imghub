@@ -65,4 +65,7 @@ public class UserVO extends BaseVO {
 
     /** 注册时间 */
     private Date gmtCreate;
+
+    /** 用户登录 Token */
+    private String token;
 }
