@@ -7,7 +7,7 @@ import cn.hutool.crypto.asymmetric.Sign;
 import cn.hutool.crypto.asymmetric.SignAlgorithm;
 import cn.lmsite.imghub.common.result.BaseResult;
 import cn.lmsite.imghub.common.result.ServiceResult;
-import cn.lmsite.imghub.common.result.enums.CommonResultEnum;
+import cn.lmsite.imghub.common.enums.ResultCodeEnum;
 import cn.lmsite.imghub.service.UsersService;
 import cn.lmsite.imghub.vo.UserVO;
 import org.apache.commons.lang3.StringUtils;
@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @ResponseBody
 @RequestMapping(value = "/user")
-public class UserApi extends BaseApi {
+public class UserApi extends ApiResultEnhanced {
 
     final UsersService usersService;
 
-    public UserApi(UsersService usersService) {this.usersService = usersService;}
+    public UserApi(UsersService usersService) {
+        this.usersService = usersService;
+    }
 
     /**
      * 用户注册
@@ -32,7 +34,7 @@ public class UserApi extends BaseApi {
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public BaseResult<Boolean> userRegister(@RequestBody UserVO user) {
         ServiceResult<Boolean> result = usersService.register(user);
-        return buildingBaseResult(result);
+        return buildResultByServiceRes(result);
     }
 
     /**
@@ -41,9 +43,9 @@ public class UserApi extends BaseApi {
      * @return {@link BaseResult<Boolean>}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public BaseResult<Boolean> userLogin(@RequestBody UserVO user) {
-        ServiceResult<Boolean> login = usersService.login(user);
-        return buildingBaseResult(login);
+    public BaseResult<UserVO> userLogin(@RequestBody UserVO user) {
+        ServiceResult<UserVO> login = usersService.login(user);
+        return buildResultByServiceRes(login);
     }
 
     /**
@@ -54,7 +56,7 @@ public class UserApi extends BaseApi {
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public BaseResult<UserVO> userInfoUpdate(@RequestBody UserVO user) {
         ServiceResult<UserVO> update = usersService.updateUser(user);
-        return buildingBaseResult(update);
+        return buildResultByServiceRes(update);
     }
 
     /**
@@ -66,7 +68,7 @@ public class UserApi extends BaseApi {
     public BaseResult<UserVO> getUser(@RequestBody UserVO user) {
         ServiceResult<UserVO> detail = usersService.selectUser(user.getId(), user.getUid(), user.getUserName(), user.getPhoneNum(),
                 user.getEmail());
-        return buildingBaseResult(detail);
+        return buildResultByServiceRes(detail);
     }
 
     /**
@@ -77,7 +79,7 @@ public class UserApi extends BaseApi {
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
     public BaseResult<List<UserVO>> getAllList() {
         ServiceResult<List<UserVO>> detail = usersService.selectAllUserList();
-        return buildingBaseResult(detail);
+        return buildResultByServiceRes(detail);
     }
 
     /**
@@ -88,7 +90,7 @@ public class UserApi extends BaseApi {
     @RequestMapping(value = "/queryByCondition", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public BaseResult<List<UserVO>> getAllList(@RequestBody UserVO user) {
         ServiceResult<List<UserVO>> listServiceResult = usersService.selectByCondition(user);
-        return buildingBaseResult(listServiceResult);
+        return buildResultByServiceRes(listServiceResult);
     }
 
     /**
@@ -99,13 +101,13 @@ public class UserApi extends BaseApi {
     @RequestMapping(value = "/genUserSign", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     public BaseResult<byte[]> genUserSign(@RequestBody UserVO user) {
         if (StringUtils.isAnyBlank(user.getUserName(), user.getPasswd())) {
-            return new BaseResult<>(CommonResultEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
+            return new BaseResult<>(ResultCodeEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
         }
         byte[] content = (user.getUserName() + user.getPasswd()).getBytes();
         Sign sign = SecureUtil.sign(SignAlgorithm.MD5withRSA);
         //签名
         byte[] signed = sign.sign(content);
-        return new BaseResult<>(CommonResultEnum.SUCCESS, signed);
+        return new BaseResult<>(ResultCodeEnum.SUCCESS, signed);
     }
 
     /**
@@ -116,13 +118,13 @@ public class UserApi extends BaseApi {
     @RequestMapping(value = "/{id}/verifySign", method = RequestMethod.GET)
     public BaseResult<Boolean> genUserSign(@Param("signature") String signature, @PathVariable("id") Long id) {
         if (StringUtils.isBlank(signature)) {
-            return new BaseResult<>(CommonResultEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
+            return new BaseResult<>(ResultCodeEnum.REQUIRED_PARAMETERS_ARE_EMPTY);
         }
         Sign sign = SecureUtil.sign(SignAlgorithm.MD5withRSA);
         UserVO userVO = usersService.selectById(id).getData();
         String content = userVO.getUserName() + userVO.getPasswd();
         // //验证签名
         boolean verify = sign.verify(content.getBytes(), signature.getBytes());
-        return new BaseResult<>(CommonResultEnum.SUCCESS, verify);
+        return new BaseResult<>(ResultCodeEnum.SUCCESS, verify);
     }
 }

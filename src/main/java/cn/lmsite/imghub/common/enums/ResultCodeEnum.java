@@ -1,4 +1,4 @@
-package cn.lmsite.imghub.common.result.enums;
+package cn.lmsite.imghub.common.enums;
 
 import cn.lmsite.imghub.common.result.ResultCode;
 
@@ -7,7 +7,7 @@ import cn.lmsite.imghub.common.result.ResultCode;
  *
  * @author Jonny.Chang  ( https://jonnyhub.com )  @jonny6015
  */
-public enum CommonResultEnum implements ResultCode {
+public enum ResultCodeEnum implements ResultCode {
 
     /** 成功 */
     SUCCESS("00000", "一切 ok，成功"),
@@ -361,7 +361,7 @@ public enum CommonResultEnum implements ResultCode {
     private String code;
     private String msg;
 
-    CommonResultEnum(String code, String msg) {
+    ResultCodeEnum(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }

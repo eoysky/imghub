@@ -30,7 +30,7 @@ public class CommonException extends RuntimeException {
     }
 
     public CommonException(String msg) {
-        this(SystemCodeEnum.COMMON.getCode(), msg);
+        this(SystemCodeEnum.SYSTEM_ERROR.getCode(), msg);
     }
 
     public static CommonException getInstance(String msg, Object... args) {

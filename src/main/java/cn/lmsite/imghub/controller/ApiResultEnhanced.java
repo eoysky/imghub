@@ -5,12 +5,8 @@ import cn.lmsite.imghub.common.result.PageResult;
 import cn.lmsite.imghub.common.result.BaseResult;
 import cn.lmsite.imghub.common.result.ServicePageResult;
 import cn.lmsite.imghub.common.result.ServiceResult;
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
-public class BaseApi<T> {
+public class ApiResultEnhanced {
     /**
      * 通过service结果构建api返回结果
      *
@@ -37,5 +33,4 @@ public class BaseApi<T> {
                 serviceResult.getData(), resultCode.getMsg(), serviceResult.getPageNo(), serviceResult.getPageSize(),
                 serviceResult.getTotalCount());
     }
-
 }

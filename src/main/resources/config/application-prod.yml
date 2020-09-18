@@ -5,9 +5,13 @@ mybatis:
 server:
   port: 7218
   servlet:
-    context-path: /api/
+    context-path: /prod/
 
 spring:
+#  security:
+#    user:
+#      name: admin
+#      password: rain8240
   jpa:
     open-in-view: false
   datasource:
@@ -15,3 +19,14 @@ spring:
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/imghub?useUnicode=true&useSSL=false&characterEncoding=utf8
+  redis:
+    database: 0
+    host: "47.99.172.232"
+    password:
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+      min-idle: 0
+    port: 6379
+    timeout: 3000

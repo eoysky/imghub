@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum SystemCodeEnum {
 
-    SUCC(2000, "SUCC"),
+    SUCCESS(2000, "SUCCESS"),
 
     ERROR_USER_NOT_EXIST(4001008, "用户不存在"),
 
@@ -12,7 +12,7 @@ public enum SystemCodeEnum {
 
     ERROR_TOKEN(4001011, "token不正确"),
 
-    COMMON(0, "错误");
+    SYSTEM_ERROR(0, "错误");
 
     @Getter
     private final int    code;

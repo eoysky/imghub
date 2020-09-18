@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import cn.lmsite.imghub.common.result.ServiceResult;
+import cn.lmsite.imghub.entity.User;
 import cn.lmsite.imghub.vo.UserVO;
 import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,7 @@ class UsersServiceTest {
         UserVO userVO = new UserVO();
         userVO.setUserName("jonny6015");
         userVO.setPasswd("rain8240");
-        ServiceResult<Boolean> login = usersService.login(userVO);
+        ServiceResult<UserVO> login = usersService.login(userVO);
         System.out.println(JSON.toJSONString(result));
     }
 
@@ -69,6 +70,23 @@ class UsersServiceTest {
     void testSelectAll() {
         List<UserVO> data = usersService.selectAllUserList().getData();
         System.out.println(JSON.toJSONString(data));
+    }
+
+    @Test
+    void testGetToken() {
+        UserVO user = new UserVO();
+        user.setUserName("admin");
+        user.setPasswd("rain8240");
+        ServiceResult<String> userLoginToken = usersService.getUserToken(user);
+        System.out.println(userLoginToken.getData());
+        ServiceResult<Boolean> isTrue = usersService.verifyUserToken(userLoginToken.getData());
+        System.out.println(isTrue);
+    }
+
+    @Test
+    void testVerifyUserToken() {
+        ServiceResult<Boolean> isTrue = usersService.verifyUserToken("c8cc2f522d27464f9670b49f0bc99b0c");
+        System.out.println(isTrue);
     }
 
     /**
