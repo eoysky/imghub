@@ -18,7 +18,7 @@ public class CommonException extends RuntimeException {
     }
 
     public CommonException(SystemCodeEnum systemCode) {
-        super(systemCode.getConent());
+        super(systemCode.getContent());
         this.code = systemCode.getCode();
         this.systemCode = systemCode;
     }
