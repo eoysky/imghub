@@ -134,6 +134,7 @@
         <finalName>imghub-server</finalName>
         <!-- 定义了变量配置文件的地址 -->
         <filters>
+            <filter>src/main/resources/config/application.yml</filter>
             <filter>src/main/resources/config/application-${env}.yml</filter>
         </filters>
         <resources>
