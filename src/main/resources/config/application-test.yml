@@ -1,6 +1,6 @@
 # Server 配置
 server:
-  port: 8890
+  port: 8891
   servlet:
     context-path: /prod/
 
