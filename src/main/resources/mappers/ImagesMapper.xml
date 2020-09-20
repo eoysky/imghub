@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lmsite.imghub.mapper.ImagesMapper">
+    <resultMap id="BaseResultMap" type="cn.lmsite.imghub.entity.Images">
+        <!--@mbg.generated-->
+        <!--@Table images-->
+        <id column="id" property="id"/>
+        <id column="image_uid" property="imageUid"/>
+        <result column="image_path" property="imagePath"/>
+        <result column="thumb_path" property="thumbPath"/>
+        <result column="storage_engine" property="storageEngine"/>
+        <result column="storage_ip" property="storageIp"/>
+        <result column="storage_ua" property="storageUa"/>
+        <result column="upload_time" property="uploadTime"/>
+        <result column="owner" property="owner"/>
+        <result column="compression" property="compression"/>
+        <result column="watermark" property="watermark"/>
+        <result column="level" property="level"/>
+        <result column="others" property="others"/>
+        <result column="token" property="token"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, image_uid, image_path, thumb_path, storage_engine, storage_ip, storage_ua, upload_time,
+        `owner`, compression, watermark, `level`, `others`, token, gmt_create
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from images
+        where 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="id != null">
+            and image_uid = #{imageUid}
+        </if>
+    </select>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.lmsite.imghub.entity.Images" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into images (image_uid, image_path, thumb_path, storage_engine, storage_ip,
+        storage_ua, upload_time, `owner`, compression, watermark, `level`,
+        `others`, token, gmt_create)
+        values (#{imageUid}, #{imagePath}, #{thumbPath}, #{storageEngine}, #{storageIp},
+        #{storageUa}, #{uploadTime}, #{owner}, #{compression}, #{watermark}, #{level},
+        #{others}, #{token}, #{gmtCreate})
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update images
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="image_path = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.imagePath}
+                </foreach>
+            </trim>
+            <trim prefix="thumb_path = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.thumbPath}
+                </foreach>
+            </trim>
+            <trim prefix="storage_engine = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.storageEngine}
+                </foreach>
+            </trim>
+            <trim prefix="storage_ip = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.storageIp}
+                </foreach>
+            </trim>
+            <trim prefix="storage_ua = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.storageUa}
+                </foreach>
+            </trim>
+            <trim prefix="upload_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.uploadTime}
+                </foreach>
+            </trim>
+            <trim prefix="`owner` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.owner}
+                </foreach>
+            </trim>
+            <trim prefix="compression = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.compression}
+                </foreach>
+            </trim>
+            <trim prefix="watermark = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.watermark}
+                </foreach>
+            </trim>
+            <trim prefix="`level` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.level}
+                </foreach>
+            </trim>
+            <trim prefix="`others` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.others}
+                </foreach>
+            </trim>
+            <trim prefix="token = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.token}
+                </foreach>
+            </trim>
+            <trim prefix="gmt_create = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gmtCreate}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into images
+        (image_uid, image_path, thumb_path, storage_engine, storage_ip, storage_ua, upload_time,
+        `owner`, compression, watermark, `level`, `others`, token, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.imageUid}, #{item.imagePath}, #{item.thumbPath}, #{item.storageEngine}, #{item.storageIp},
+            #{item.storageUa}, #{item.uploadTime}, #{item.owner}, #{item.compression}, #{item.watermark},
+            #{item.level}, #{item.others}, #{item.token}, #{item.gmtCreate})
+        </foreach>
+    </insert>
+</mapper>

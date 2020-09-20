@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lmsite.imghub.mapper.InvitationCodeMapper">
+    <resultMap id="BaseResultMap" type="cn.lmsite.imghub.entity.InvitationCode">
+        <!--@mbg.generated-->
+        <!--@Table invitation_code-->
+        <id column="id" property="id"/>
+        <result column="invite_code" property="inviteCode"/>
+        <result column="email" property="email"/>
+        <result column="status" property="status"/>
+        <result column="ext_info" property="extInfo"/>
+        <result column="gmt_expiration" property="gmtExpiration"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, invite_code, email, `status`, ext_info, gmt_expiration, gmt_create
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from invitation_code
+        where id = #{id}
+    </select>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.lmsite.imghub.entity.InvitationCode" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into invitation_code (invite_code, email, `status`, ext_info, gmt_expiration, gmt_create
+        )
+        values (#{inviteCode}, #{email}, #{status}, #{extInfo}, #{gmtExpiration}, #{gmtCreate}
+        )
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update invitation_code
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="invite_code = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.inviteCode}
+                </foreach>
+            </trim>
+            <trim prefix="email = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.email}
+                </foreach>
+            </trim>
+            <trim prefix="`status` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.status}
+                </foreach>
+            </trim>
+            <trim prefix="ext_info = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.extInfo}
+                </foreach>
+            </trim>
+            <trim prefix="gmt_expiration = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gmtExpiration}
+                </foreach>
+            </trim>
+            <trim prefix="gmt_create = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gmtCreate}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into invitation_code
+        (invite_code, email, `status`, ext_info, gmt_expiration, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.inviteCode}, #{item.email}, #{item.status}, #{item.extInfo}, #{item.gmtExpiration},
+            #{item.gmtCreate})
+        </foreach>
+    </insert>
+</mapper>

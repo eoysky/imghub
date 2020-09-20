@@ -1,0 +1,15 @@
+# Server 配置
+server:
+  port: 8890
+  servlet:
+    context-path: /prod/
+
+# MySQL/Redis 数据库配置；测试环境，连接服务器的本地测试数据库(mysql:imghub_dev)
+spring:
+  datasource:
+    password: rain8240
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/imghub_dev?useUnicode=true&useSSL=false&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+  redis:
+    host: localhost

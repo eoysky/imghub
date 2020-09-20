@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.image_info</OriginalElement>
+  <nodes>
+    <node x="629.0" y="603.0">898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.operation_config</node>
+    <node x="0.0" y="603.0">898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.storage_engine</node>
+    <node x="0.0" y="0.0">898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.user</node>
+    <node x="567.0" y="0.0">898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.image_info</node>
+    <node x="279.0" y="0.0">898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.images</node>
+    <node x="329.0" y="603.0">898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.invitation_code</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.7930306230200633" x="428.5" y="463.5" />
+  <SelectedNodes>
+    <node>898c51f1-5787-48b4-a936-159cc31b9cd6.TABLE:imghub.image_info</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>键列</Category>
+    <Category>列</Category>
+    <Category>虚拟外键</Category>
+  </Categories>
+</Diagram>
+

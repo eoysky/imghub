@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lmsite.imghub.mapper.ImageInfoMapper">
+    <resultMap id="BaseResultMap" type="cn.lmsite.imghub.entity.ImageInfo">
+        <!--@mbg.generated-->
+        <!--@Table image_info-->
+        <id column="id" property="id"/>
+        <result column="image_uid" property="imageUid"/>
+        <result column="mime_type" property="mimeType"/>
+        <result column="width" property="width"/>
+        <result column="height" property="height"/>
+        <result column="view_times" property="viewTimes"/>
+        <result column="ext_name" property="extName"/>
+        <result column="client_name" property="clientName"/>
+        <result column="tags" property="tags"/>
+        <result column="description" property="description"/>
+        <result column="images_size" property="imagesSize"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, image_uid, mime_type, width, height, view_times, ext_name, client_name, tags,
+        description, images_size, gmt_create
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from image_info
+        where id = #{id}
+    </select>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.lmsite.imghub.entity.ImageInfo" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into image_info (image_uid, mime_type, width, height, view_times, ext_name,
+        client_name, tags, description, images_size, gmt_create)
+        values (#{imageUid}, #{mimeType}, #{width}, #{height}, #{viewTimes}, #{extName},
+        #{clientName}, #{tags}, #{description}, #{imagesSize}, #{gmtCreate})
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update image_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="image_uid = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.imageUid}
+                </foreach>
+            </trim>
+            <trim prefix="mime_type = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.mimeType}
+                </foreach>
+            </trim>
+            <trim prefix="width = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.width}
+                </foreach>
+            </trim>
+            <trim prefix="height = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.height}
+                </foreach>
+            </trim>
+            <trim prefix="view_times = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.viewTimes}
+                </foreach>
+            </trim>
+            <trim prefix="ext_name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.extName}
+                </foreach>
+            </trim>
+            <trim prefix="client_name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.clientName}
+                </foreach>
+            </trim>
+            <trim prefix="tags = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.tags}
+                </foreach>
+            </trim>
+            <trim prefix="description = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.description}
+                </foreach>
+            </trim>
+            <trim prefix="images_size = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.imagesSize}
+                </foreach>
+            </trim>
+            <trim prefix="gmt_create = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.gmtCreate}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into image_info
+        (image_uid, mime_type, width, height, view_times, ext_name, client_name, tags, description,
+        images_size, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.imageUid}, #{item.mimeType}, #{item.width}, #{item.height}, #{item.viewTimes},
+            #{item.extName}, #{item.clientName}, #{item.tags}, #{item.description}, #{item.imagesSize},
+            #{item.gmtCreate})
+        </foreach>
+    </insert>
+</mapper>
