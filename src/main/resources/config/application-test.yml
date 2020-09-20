@@ -11,6 +11,8 @@ server:
 
 # MySQL/Redis 数据库配置；测试环境，连接服务器的本地测试数据库(mysql:imghub_dev)
 spring:
+  jpa:
+    open-in-view: false
   datasource:
     password: rain8240
     username: root
