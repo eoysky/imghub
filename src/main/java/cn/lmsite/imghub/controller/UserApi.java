@@ -7,6 +7,7 @@ import cn.lmsite.imghub.common.result.ServiceResult;
 import cn.lmsite.imghub.service.UserService;
 import cn.lmsite.imghub.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +85,18 @@ public class UserApi extends ApiResultEnhanced {
     public BaseResult<List<UserVO>> getAllList(@RequestBody UserVO userVO) {
         ServiceResult<List<UserVO>> listServiceResult = userService.selectByCondition(userVO);
         return buildResultByServiceRes(listServiceResult);
+    }
+
+
+    /**
+     * 安全框架设置session，session失效处理
+     * @return
+     */
+    @RequestMapping("/login/invalid")
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public String invalid() {
+        return "Session 已过期，请重新登录";
     }
 
 }
