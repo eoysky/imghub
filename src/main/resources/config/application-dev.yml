@@ -15,7 +15,7 @@ spring:
     password: rain8240
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.99.172.232:3306/imghub_dev?useUnicode=true&useSSL=false&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://47.99.172.232:3306/imghub?useUnicode=true&useSSL=false&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
   jpa:
     open-in-view: false
   redis:
