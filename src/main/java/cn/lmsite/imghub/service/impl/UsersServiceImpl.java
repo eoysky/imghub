@@ -19,13 +19,16 @@ import cn.lmsite.imghub.vo.UserVO;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import javax.annotation.Resource;
 
 @Service
 public class UsersServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Autowired
@@ -77,7 +80,7 @@ public class UsersServiceImpl implements UserService {
         return loginCheck ? new ServiceResult<>(selectUserVO) : new ServiceResult<>(ResultCodeEnum.SYSTEM_EXECUTION_ERROR);
     }
 
-    @Override
+/*    @Override
     public ServiceResult<Boolean> register(UserVO userVO) {
         if (userVO == null || StringUtils.isAnyBlank(userVO.getUid(), userVO.getUserName(), userVO.getPasswd(), userVO.getEmail(),
                 userVO.getRegUa(), userVO.getRegIp()) || userVO.getPhoneNum() == null || userVO.getPermission() == null) {
@@ -91,6 +94,20 @@ public class UsersServiceImpl implements UserService {
         userVO.setUploadTotal(0L);
         userVO.setGmtCreate(new Date());
         userVO.setPasswd(CryptUtils.Encrypt(userVO.getPasswd()));
+        int insert = userMapper.insert(BeanConvertor.convertBean(userVO, User.class));
+        return insert > 0 ? new ServiceResult<>(true, ResultCodeEnum.SUCCESS) : new ServiceResult<>(ResultCodeEnum.DATABASE_SERVICE_ERROR);
+    }*/
+
+
+    @Override
+    public ServiceResult<Boolean> register(UserVO userVO) {
+        // 获取明文
+        String password = userVO.getPasswd();
+        //对明文密码进行加密 -- 加盐加密\
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encode = passwordEncoder.encode(password);
+        //把加密数据设置到用户中
+        userVO.setPasswd(encode);
         int insert = userMapper.insert(BeanConvertor.convertBean(userVO, User.class));
         return insert > 0 ? new ServiceResult<>(true, ResultCodeEnum.SUCCESS) : new ServiceResult<>(ResultCodeEnum.DATABASE_SERVICE_ERROR);
     }

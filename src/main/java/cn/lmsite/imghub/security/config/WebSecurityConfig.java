@@ -4,13 +4,12 @@ import cn.lmsite.imghub.common.constants.BaseConfig;
 import cn.lmsite.imghub.security.CustomUserService;
 import cn.lmsite.imghub.security.handle.CustomAuthenticationFailureHandler;
 import cn.lmsite.imghub.security.handle.CustomAuthenticationSuccessHandler;
-import cn.lmsite.imghub.utils.user.MD5Util;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.Resource;
 
@@ -34,19 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserService).passwordEncoder(new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                // 加密
-                return MD5Util.encode((String) rawPassword);
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return encodedPassword.equals(MD5Util.encode((String) rawPassword));
-            }
-        });
-        // user Details Service 验证,加密密码对比校验
+        auth.userDetailsService(customUserService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
