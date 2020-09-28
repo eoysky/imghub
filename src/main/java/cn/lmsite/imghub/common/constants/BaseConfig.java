@@ -12,7 +12,7 @@ public class BaseConfig<T> {
     public static final Long TOKEN_EXPIRATION_TIME = 6L;
 
     /** 关闭登录校验 */
-    public static final boolean CLOSE_SECURITY = true;
+    public static final boolean CLOSE_SECURITY = false;
 
     /** 构造函数 */
     private BaseConfig() {

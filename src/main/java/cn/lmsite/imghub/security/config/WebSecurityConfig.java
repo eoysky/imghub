@@ -45,13 +45,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and().logout().permitAll();
         } else {
             http.authorizeRequests()
+                    .antMatchers("/user/register").permitAll()
                  //   .antMatchers("/login/invalid").permitAll()   //TODO session失效处理
 //                    .antMatchers("/admin/index").hasRole("ADMIN")//指定权限为ADMIN才能访问
 //                    .antMatchers("/person").hasAnyRole("ADMIN","USER")//指定多个权限都能访问
                     .anyRequest().authenticated().and()
 
 
-                    .formLogin().loginPage("/login")  // TODO 设置登陆静态页面
+                    .formLogin()
+                  //  .loginPage("http://192.168.0.102:8000")  // TODO 设置登陆静态页面
                     .successHandler(customAuthenticationSuccessHandler) //登陆成功后自定义处理方法
                     .failureHandler(customAuthenticationFailureHandler) //登陆失败后自定义处理方法
                     .permitAll()

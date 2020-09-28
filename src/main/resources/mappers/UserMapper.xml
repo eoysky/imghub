@@ -296,7 +296,7 @@
 
     <select id="findByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select u.*
-        ,r.roleName
+        ,r.role_name roleName
         from `user` u
         LEFT JOIN imghub_role_user iru on u.id= iru.user_id
         LEFT JOIN imghub_role r on iru.role_id=r.id
